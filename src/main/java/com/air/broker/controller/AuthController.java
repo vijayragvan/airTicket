@@ -36,7 +36,7 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/signin")
+    @PostMapping("/signIn")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsernameOrEmail(),loginDto.getPassword()));
@@ -45,7 +45,7 @@ public class AuthController {
         return new ResponseEntity<>("User signin successfully", HttpStatus.OK);
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/signUp")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
         // User name already taken
         if(userRepository.existsByUsername(signUpDto.getUsername())){

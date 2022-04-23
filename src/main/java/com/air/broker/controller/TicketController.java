@@ -3,6 +3,7 @@ package com.air.broker.controller;
 import com.air.broker.helper.ExcelHelper;
 import com.air.broker.message.ResponseMessage;
 import com.air.broker.model.Ticket;
+import com.air.broker.model.TicketBookingRequest;
 import com.air.broker.service.ExcelService;
 import com.air.broker.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +106,17 @@ public class TicketController {
                 return new ResponseEntity<>(ticket.get(), HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/requestTickets")
+    public ResponseEntity<TicketBookingRequest> requestTicket(@RequestBody TicketBookingRequest bookingRequest) {
+        try {
+            TicketBookingRequest _bookingRequest = ticketService.saveTicketBookingRequest(bookingRequest);
+            return new ResponseEntity<>(_bookingRequest, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
